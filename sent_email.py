@@ -9,7 +9,7 @@ def send():
 
     content = '''
     Please Start Your Scheduler!!!
-    book & write
+    book & write & try
     sport & studing
     video & friend
     english & exercise
