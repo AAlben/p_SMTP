@@ -28,7 +28,6 @@ def take_index(pop_conn):
         print(index)
         subject_flag, from_flag, date_flag = False, False, False
         for msg in msgs:
-            print(msg)
             try:
                 _msg = msg.decode()
             except UnicodeDecodeError as e:
