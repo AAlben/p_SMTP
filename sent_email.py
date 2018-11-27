@@ -7,7 +7,7 @@ receivers = ['345657803@qq.com']
 PASS = 'lzeszgpxyxtpbihi'
 
 
-def send(content):
+def send(content=None):
     if not content:
         content = '''
         Please Start Your Scheduler!!!
