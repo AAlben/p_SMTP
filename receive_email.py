@@ -46,7 +46,10 @@ for index in today_indexes:
     for index, line in enumerate(down[1]):
         if 'Subject' in line.decode():
             content_flag = True
-            line = line.decode().split('Subject: =?utf-8?b?')[1].encode()
+            lines = line.decode().split('Subject: =?utf-8?b?')
+            print(lines)
+            if not lines:
+                continue
         if content_flag:
             content += line.decode()
     content = base64.b64decode(content).decode()
