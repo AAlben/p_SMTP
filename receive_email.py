@@ -19,6 +19,7 @@ for index, i in enumerate(index_list):
     top_msg = pop_conn.top(i, 0)
     msgs = top_msg[1]
     print(index)
+    subject_flag, from_flag, date_flag = False, False, False
     for msg in msgs:
         try:
             _msg = msg.decode()
@@ -28,20 +29,22 @@ for index, i in enumerate(index_list):
             raise
         if 'Subject:' in _msg:
             if 'Re: Day Scheduler' in _msg:
-                pass
+                subject_flag = True
             else:
                 break
         if 'From: ' in _msg:
             if '345657803@qq.com' in _msg:
-                pass
+                from_flag = True
             else:
                 break
         if 'Date:' in _msg:
             if '27 Nov' in _msg:
-                today_indexes.append(index)
+                date_flag = True
             else:
                 break_flag = True
                 break
+        if subject_flag and from_flag and date_flag:
+            today_indexes.append(index)
 
 print('-' * 100)
 print(today_indexes)
@@ -52,8 +55,10 @@ for index in today_indexes:
     content_flag = False
     index = len(index_list) - index
     down = pop_conn.retr(index)
+    start_content = 'Content-Transfer-Encoding: base64'
     for index, line in enumerate(down[1]):
-        if 'Content-Transfer-Encoding: base64' in line.decode():
+        print(line)
+        if start_content in line.decode():
             content_flag = True
             continue
         elif '_NextPart_' in line.decode():
