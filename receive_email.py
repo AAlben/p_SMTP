@@ -4,6 +4,7 @@ import base64
 import requests
 
 from email import parser
+from sent_email import send
 
 SENDER = '345657803@qq.com'
 PASS = 'lzeszgpxyxtpbihi'
@@ -51,6 +52,7 @@ def take_index(pop_conn):
 
 def parse_email(index, pop_conn):
     content = ''
+    score = 0
     content_flag = False
     down = pop_conn.retr(index)
     start_content = 'Content-Transfer-Encoding: base64'
@@ -68,13 +70,14 @@ def parse_email(index, pop_conn):
     robot_message = take_robot(content_list[1])
 
     if 'OVER scheduler' in content:
-        pass
+        score = 10
     elif 'REST scheduler' in content:
-        pass
+        score = 5
     elif 'FAIL scheduler' in content:
-        pass
-    print(content)
-    print(robot_message)
+        score = 0
+
+    robot_message += 'SCORE = {0}'.format(score)
+    send(robot_message)
 
 
 def take_robot(content):
