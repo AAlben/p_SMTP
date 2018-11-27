@@ -4,7 +4,7 @@ from apscheduler.executors.pool import ProcessPoolExecutor
 from sent_email import send
 
 if __name__ == '__main__':
-    sched()
+    send()
     executors = {
         'default': {'type': 'threadpool', 'max_workers': 20},
         'processpool': ProcessPoolExecutor(max_workers=5)
