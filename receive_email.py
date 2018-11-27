@@ -43,8 +43,8 @@ for index, i in enumerate(index_list):
             else:
                 break_flag = True
                 break
-        if subject_flag and from_flag and date_flag:
-            today_indexes.append(index)
+    if subject_flag and from_flag and date_flag:
+        today_indexes.append(index)
 
 print('-' * 100)
 print(today_indexes)
