@@ -112,3 +112,7 @@ def receive():
 
     for index in msg_indexes:
         parse_email(index, pop_conn)
+
+
+if __name__ == '__main__':
+    receive()
