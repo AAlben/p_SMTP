@@ -2,9 +2,11 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.executors.pool import ProcessPoolExecutor
 
 from sent_email import send
+from receive_email import receive
 
 if __name__ == '__main__':
     send()
+    receive()
     executors = {
         'default': {'type': 'threadpool', 'max_workers': 20},
         'processpool': ProcessPoolExecutor(max_workers=5)
@@ -19,4 +21,5 @@ if __name__ == '__main__':
     sched.add_job(send, 'cron', hour=9, minute=10, misfire_grace_time=200)
     sched.add_job(send, 'cron', hour=13, minute=0, misfire_grace_time=200)
     sched.add_job(send, 'cron', hour=19, minute=0, misfire_grace_time=200)
+    sched.add_job(receive, 'cron', minute=0, misfire_grace_time=200)
     sched.start()

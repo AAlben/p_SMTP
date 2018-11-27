@@ -1,9 +1,12 @@
+import re
 import json
 import poplib
 import base64
 import requests
 
 from email import parser
+from datetime import datetime
+
 from sent_email import send
 
 SENDER = '345657803@qq.com'
@@ -15,6 +18,8 @@ def take_index(pop_conn):
     ret = pop_conn.stat()
     index_list = list(range(1, ret[0] + 1))[::-1]
     break_flag = False
+    _date = datetime.now().strftime('%d %b')
+    now_hour = datetime.now().hour
     for index, i in enumerate(index_list):
         if break_flag:
             break
@@ -23,6 +28,7 @@ def take_index(pop_conn):
         print(index)
         subject_flag, from_flag, date_flag = False, False, False
         for msg in msgs:
+            print(msg)
             try:
                 _msg = msg.decode()
             except UnicodeDecodeError as e:
@@ -40,8 +46,11 @@ def take_index(pop_conn):
                 else:
                     break
             if 'Date:' in _msg:
-                if '27 Nov' in _msg:
-                    date_flag = True
+                if _date in _msg:
+                    _time = re.findall(r'(\d{2}:\d{2}:\d{2})', _msg)[0]
+                    _hour = int(_time.split(':')[0])
+                    if now_hour - _hour <= 1:
+                        date_flag = True
                 else:
                     break
         if subject_flag and from_flag and date_flag:
@@ -78,6 +87,7 @@ def parse_email(index, pop_conn):
 
     robot_message += 'SCORE = {0}'.format(score)
     send(robot_message)
+    # print(robot_message)
 
 
 def take_robot(content):
