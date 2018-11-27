@@ -26,8 +26,13 @@ for index, i in enumerate(index_list):
             continue
         except Exception as e:
             raise
+        if 'Subject:' in _msg:
+            if 'Re: Day Scheduler' in _msg:
+                pass
+            else:
+                break
         if 'From: ' in _msg:
-            if 'li345657803@qq.com' in _msg:
+            if '345657803@qq.com' in _msg:
                 pass
             else:
                 break
@@ -38,21 +43,25 @@ for index, i in enumerate(index_list):
                 break_flag = True
                 break
 
+print('-' * 100)
+print(today_indexes)
+print('-' * 100)
+
 for index in today_indexes:
     content = ''
     content_flag = False
     index = len(index_list) - index
     down = pop_conn.retr(index)
     for index, line in enumerate(down[1]):
-        if 'Subject' in line.decode():
+        if 'Content-Transfer-Encoding: base64' in line.decode():
             content_flag = True
-            lines = line.decode().split('Subject: =?utf-8?b?')
-            print(lines)
-            if not lines:
-                continue
+            continue
+        elif '_NextPart_' in line.decode():
+            content_flag = False
+            continue
         if content_flag:
             content += line.decode()
-    content = base64.b64decode(content).decode()
+    content = base64.b64decode(content).decode('gbk')
     if 'OVER scheduler' in content:
         pass
     elif 'REST scheduler' in content:
@@ -60,5 +69,4 @@ for index in today_indexes:
     elif 'FAIL scheduler' in content:
         pass
     print(content)
-    break
 raise Exception('', '')
