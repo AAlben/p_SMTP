@@ -110,4 +110,5 @@ def receive():
     print(msg_indexes)
     print('-' * 100)
 
-    for index in today_indexes:
+    for index in msg_indexes:
+        parse_email(index, pop_conn)
