@@ -101,10 +101,11 @@ def parse_email(index, sum_score, pop_conn):
     elif 'FAIL scheduler' in content:
         score = 0
 
+    sum_score += score
     robot_message += 'SCORE = {0}\r\n'.format(score)
     robot_message += 'TODAY SUM SCORE = {0}'.format(sum_score)
     send(robot_message)
-    set_score(score)
+    set_score(sum_score)
     # print(robot_message)
 
 
