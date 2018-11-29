@@ -24,6 +24,11 @@ def take_score(now_hour):
             return int(score)
 
 
+def set_score(score):
+    with open('SCORE.txt', 'w') as fp:
+        fp.write(str(score))
+
+
 def take_index(pop_conn):
     msg_indexes = []
     ret = pop_conn.stat()
@@ -99,6 +104,7 @@ def parse_email(index, sum_score, pop_conn):
     robot_message += 'SCORE = {0}\r\n'.format(score)
     robot_message += 'TODAY SUM SCORE = {0}'.format(sum_score)
     send(robot_message)
+    set_score(score)
     # print(robot_message)
 
 
