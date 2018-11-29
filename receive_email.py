@@ -13,6 +13,17 @@ SENDER = '345657803@qq.com'
 PASS = 'lzeszgpxyxtpbihi'
 
 
+def take_score(now_hour):
+    if now_hour == 0:
+        with open('SCORE.txt', 'w') as fp:
+            fp.write('0')
+        return 0
+    else:
+        with open('SCORE.txt', 'r') as fp:
+            score = fp.read()
+            return int(score)
+
+
 def take_index(pop_conn):
     msg_indexes = []
     ret = pop_conn.stat()
@@ -20,6 +31,7 @@ def take_index(pop_conn):
     break_flag = False
     _date = datetime.now().strftime('%d %b')
     now_hour = datetime.now().hour
+    score = take_score(now_hour)
     for index, i in enumerate(index_list):
         if break_flag:
             break
@@ -55,10 +67,10 @@ def take_index(pop_conn):
         if subject_flag and from_flag and date_flag:
             break_flag = True
             msg_indexes.append(len(index_list) - index)
-    return msg_indexes
+    return msg_indexes, score
 
 
-def parse_email(index, pop_conn):
+def parse_email(index, sum_score, pop_conn):
     content = ''
     score = 0
     content_flag = False
@@ -84,7 +96,8 @@ def parse_email(index, pop_conn):
     elif 'FAIL scheduler' in content:
         score = 0
 
-    robot_message += 'SCORE = {0}'.format(score)
+    robot_message += 'SCORE = {0}\r\n'.format(score)
+    robot_message += 'TODAY SUM SCORE = {0}'.format(sum_score)
     send(robot_message)
     # print(robot_message)
 
@@ -116,14 +129,14 @@ def receive():
     pop_conn.user(SENDER)
     pop_conn.pass_(PASS)
 
-    msg_indexes = take_index(pop_conn)
+    msg_indexes, score = take_index(pop_conn)
 
     print('-' * 100)
     print(msg_indexes)
     print('-' * 100)
 
     for index in msg_indexes:
-        parse_email(index, pop_conn)
+        parse_email(index, score, pop_conn)
 
 
 if __name__ == '__main__':
