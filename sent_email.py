@@ -7,7 +7,7 @@ receivers = ['345657803@qq.com']
 PASS = 'lzeszgpxyxtpbihi'
 
 
-def send(content=None):
+def send(content=None, _receivers=None):
     if not content:
         content = '''
         Please Start Your Scheduler!!!
@@ -17,6 +17,8 @@ def send(content=None):
         english & exercise
         clear & NO NO NO fire
         '''
+    if not _receivers:
+        receivers.extend(_receivers)
     message = MIMEText(content, 'plain', 'utf-8')
     message['From'] = formataddr(["Scheduler Self", sender])
     message['To'] = formataddr(["My Self", sender])

@@ -100,6 +100,10 @@ def parse_email(index, sum_score, pop_conn):
         score = 5
     elif 'FAIL scheduler' in content:
         score = 0
+    elif 'FIRE' in content:
+        score = -20
+        message = '我飞机了。。。'
+        send(message, ['lichenguang@smzdm.com'])
 
     sum_score += score
     robot_message += 'SCORE = {0}\r\n'.format(score)
