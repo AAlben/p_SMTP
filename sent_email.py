@@ -15,7 +15,7 @@ def send(content=None):
         sport & studing
         video & friend
         english & exercise
-        clear
+        clear & NO NO NO fire
         '''
     message = MIMEText(content, 'plain', 'utf-8')
     message['From'] = formataddr(["Scheduler Self", sender])
