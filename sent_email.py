@@ -18,7 +18,9 @@ def send(content=None, _receivers=None):
         clear & NO NO NO fire
         '''
     if _receivers:
-        receivers.extend(_receivers)
+        _receivers.extend(receivers)
+    else:
+        _receivers = receivers
     message = MIMEText(content, 'plain', 'utf-8')
     message['From'] = formataddr(["Scheduler Self", sender])
     message['To'] = formataddr(["My Self", sender])
@@ -27,6 +29,6 @@ def send(content=None, _receivers=None):
 
     server = smtplib.SMTP_SSL("smtp.qq.com", 465)
     server.login(sender, PASS)
-    server.sendmail(sender, receivers, message.as_string())
+    server.sendmail(sender, _receivers, message.as_string())
     server.quit()
     print("邮件发送成功")
