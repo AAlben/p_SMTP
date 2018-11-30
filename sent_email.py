@@ -17,7 +17,7 @@ def send(content=None, _receivers=None):
         english & exercise
         clear & NO NO NO fire
         '''
-    if not _receivers:
+    if _receivers:
         receivers.extend(_receivers)
     message = MIMEText(content, 'plain', 'utf-8')
     message['From'] = formataddr(["Scheduler Self", sender])
