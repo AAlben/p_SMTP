@@ -35,7 +35,7 @@ def take_index(pop_conn):
     index_list = list(range(1, ret[0] + 1))[::-1]
     break_flag = False
     _now = datetime.now()
-    _date = '{0} {1}'.format(_now.day(), _now.strftime('%b'))
+    _date = '{0} {1}'.format(_now.day, _now.strftime('%b'))
     now_hour = datetime.now().hour
     score = take_score(now_hour)
     for index, i in enumerate(index_list):
