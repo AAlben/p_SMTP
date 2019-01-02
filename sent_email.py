@@ -16,15 +16,27 @@ def server_chan(title, content):
     pass
 
 
-def send(content=None, _receivers=None):
-    if not content:
-        content = '''
+'''
+content version1 = 
+
         Please Start Your Scheduler!!!
         book & write & try
         sport & studing
         video & friend
         english & exercise
         clear & NO NO NO fire
+
+'''
+
+
+def send(content=None, _receivers=None):
+    if not content:
+        content = '''
+            数学思维：统计 + 概率
+            数学：线性代数
+            项目：天池 + kaggle
+            面试宝典：面试题 + leetcode
+            深度 + 广度：为难自己 + 新知识
         '''
     if _receivers:
         _receivers.extend(receivers)
